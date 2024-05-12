@@ -1,0 +1,36 @@
+{% extends 'fragments/base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block main-content %}
+    <div class="container h-100 d-flex justify-content-center align-items-center">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h1 style="text-align: center;">Bienvenido!</h1>
+                <p style="text-align: center;">Aca podrán hablar con gente con gustos similares mediante a 'Posts' y 'Hilos'!</p>
+            </div>
+        </div>
+        <!-- Add your form here -->
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Use widget_tweaks for form rendering -->
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {% render_field field class="form-control" %}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
